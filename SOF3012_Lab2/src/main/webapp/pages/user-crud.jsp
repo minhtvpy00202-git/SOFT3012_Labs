@@ -5,19 +5,33 @@
     <head>
         <meta charset="utf-8">
         <title>User CRUD</title>
+        <style>
+            table, th, td {
+              border: 1px solid black;
+            }
+            table {
+              border-collapse: collapse;
+            }
+        </style>
     </head>
 
     <body>
         <i>${message}</i>
         <c:url var="url" value="/user/crud" />
         <form method="post">
-            <input name="id" value="${user.id}"><br>
-            <input name="password" type="password" value="${user.password}"><br>
-            <input name="fullname" value="${user.fullname}"><br>
-            <input name="email" value="${user.email}"><br>
-            <input name="gender" type="radio" value="true" ${user.admin ? 'checked' : ''}> Male
-            <input name="gender" type="radio" value="false" ${!user.admin ? 'checked' : ''}> Female
-
+            <label>User Id: </label>
+            <input name="id" value="${user.id}" placeholder="Nhập Id"><br>
+            <label>Password: </label>
+            <input name="password" type="password" value="${user.password}" placeholder="Nhập mật khẩu"><br>
+            <label>Fullname: </label>
+            <input name="fullname" value="${user.fullname}" placeholder="Nhập Họ và tên"><br>
+            <label>Email: </label>
+            <input name="email" value="${user.email}" placeholder="user@example.com"><br>
+            <label>Giới tính: </label>
+            <input name="gender" type="radio" value="true" ${user.admin?'checked':''}>
+            Male
+            <input name="gender" type="radio" value="false" ${user.admin?'':'checked'}>
+            Female
             <hr>
             <button formaction="${url}/create">Create</button>
             <button formaction="${url}/update">Update</button>

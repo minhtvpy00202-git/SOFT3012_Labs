@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.BeanUtils;
+import poly.DAO.Impl.UserDAOImpl;
+import poly.DAO.UserDAO;
 import poly.entity.User;
 
 import java.io.IOException;
@@ -25,6 +27,7 @@ public class UserCRUDServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User form = new User();
+        UserDAO dao = new UserDAOImpl();
         try {
             BeanUtils.populate(form, req.getParameterMap());
 
@@ -36,23 +39,27 @@ public class UserCRUDServlet extends HttpServlet {
         if(path.contains("edit")) {
             String id = req.getPathInfo().substring(1);
             message = "Edit: " +id;
+            form = dao.findById(id);
         } else if (path.contains("create")) {
+            dao.create(form);
             message = "Create: " + form.getId();
             form = new User();
         } else if (path.contains("update")) {
+            dao.update(form);
             message = "Update: " +form.getId();
         } else if (path.contains("delete")) {
+            dao.deleteById(form.getId());
             message = "Delete " +form.getId();
             form = new User();
         }  else if (path.contains("reset")) {
             form = new User();
         }
 
-        List<User> list = List.of(new User(), new User(), new User());
+        List<User> list = dao.findAll();
 
         req.setAttribute("message", message);
         req.setAttribute("user", form);
         req.setAttribute("users", list);
-        req.getRequestDispatcher("/pages/user-crud.jsp");
+        req.getRequestDispatcher("/pages/user-crud.jsp").forward(req, resp);
     }
 }
