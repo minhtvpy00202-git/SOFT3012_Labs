@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/") // khi truy cập gốc của ứng dụng, servlet này sẽ được gọi
+@WebServlet("/")
 public class HomeServlet extends HttpServlet {
 
     @Override
