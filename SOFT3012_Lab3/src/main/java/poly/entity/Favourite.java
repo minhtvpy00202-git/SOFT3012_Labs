@@ -23,9 +23,11 @@ public class Favourite {
     @ManyToOne
     @JoinColumn(name="VideoId")
     private Video video;
+
     @ManyToOne
     @JoinColumn(name="UserId")
     private User user;
+
     @Temporal(TemporalType.DATE)
     private Date likeDate;
 }
